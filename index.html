@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Ti ❤️</title>
+<style>
+  body {
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow: hidden;
+    padding: 50px;
+    perspective: 1000px;
+  }
+
+  #texto {
+    font-size: 24px;
+    width: 80%;
+    margin: 50px auto 20px;
+    line-height: 1.6;
+    white-space: pre-wrap; 
+    word-wrap: break-word;
+  }
+
+  #boton {
+    display: none;
+    font-size: 22px;
+    margin-top: 30px;
+    cursor: pointer;
+    animation: latido 1s infinite;
+    color: #ff4d6d;
+  }
+
+  @keyframes latido {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  #galeria {
+    display: none;
+    position: relative;
+    height: 500px;
+  }
+
+  .foto {
+    width: 300px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 1s ease, opacity 1s ease;
+    border-radius: 15px;
+  }
+
+  .corazon {
+    position: fixed;
+    color: red;
+    animation: flotar 5s linear infinite;
+  }
+
+  @keyframes flotar {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+  }
+
+  .flor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    background: yellow;
+    border-radius: 50%;
+    animation: girarFlotar 8s linear infinite;
+    opacity: 0.8;
+  }
+
+  @keyframes girarFlotar {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+</style>
+</head>
+<body>
+
+<h1>Para mi amor 💕</h1>
+
+<div id="texto"></div>
+<div id="boton" onclick="mostrarFotos()">👉 Toca aquí ❤️</div>
+
+<div id="galeria">
+  <img src="foto1.jpeg" class="foto">
+  <img src="foto2.jpeg" class="foto">
+  <img src="foto3.jpeg" class="foto">
+  <img src="foto4.jpeg" class="foto">
+  <img src="foto5.jpeg" class="foto">
+  <img src="foto6.jpeg" class="foto">
+  <img src="foto7.jpeg" class="foto">
+  <img src="foto8.jpeg" class="foto">
+  <img src="foto9.jpeg" class="foto">
+</div>
+
+<audio id="musica" loop>
+  <source src="music1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const mensaje = "Te amo mucho.  \nEres lo mejor que me ha pasado.  \nSiempre has sido tú.  \nEn todas las vidas quiero encontrarte.  \nEres lo mejor que me ha pasado en este mundo ❤️\n\nTe amo como las vacas muuuuuuuuuuuuucho 🐮💛";
+
+  let i = 0;
+  function escribir() {
+    if (i < mensaje.length) {
+      document.getElementById("texto").innerHTML += mensaje.charAt(i);
+      i++;
+      setTimeout(escribir, 50);
+    } else {
+      document.getElementById("boton").style.display = "block";
+    }
+  }
+  escribir();
+
+  function mostrarFotos() {
+    document.getElementById("boton").style.display = "none";
+    document.getElementById("galeria").style.display = "block";
+    document.getElementById("musica").play();
+
+    const fotos = document.querySelectorAll('.foto');
+    let index = 0;
+
+    function mostrarSiguiente() {
+      fotos.forEach((f, i) => {
+        if(i === index){
+          f.style.opacity = 1;
+          f.style.transform = "translate(-50%, -50%) scale(1)";
+        } else {
+          f.style.opacity = 0;
+          f.style.transform = "translate(-50%, -50%) scale(0)";
+        }
+      });
+      index = (index + 1) % fotos.length;
+      setTimeout(mostrarSiguiente, 5000); // 5 segundos por foto
+    }
+    mostrarSiguiente();
+  }
+
+  // Corazones flotando
+  setInterval(() => {
+    const corazon = document.createElement("div");
+    corazon.classList.add("corazon");
+    corazon.innerHTML = "❤️";
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.fontSize = (Math.random() * 20 + 10) + "px";
+    document.body.appendChild(corazon);
+    setTimeout(() => { corazon.remove(); }, 5000);
+  }, 500);
+
+  // Flores amarillas animadas
+  setInterval(() => {
+    const flor = document.createElement("div");
+    flor.classList.add("flor");
+    flor.style.left = Math.random() * 100 + "vw";
+    flor.style.width = 30 + Math.random()*20 + "px";
+    flor.style.height = flor.style.width;
+    document.body.appendChild(flor);
+    setTimeout(() => { flor.remove(); }, 8000);
+  }, 700);
+</script>
+
+</body>
+</html>
